@@ -1,10 +1,7 @@
 import os
 import csv
 import base64
-import logging
 import requests
-import sendgrid
-from sendgrid.helpers.mail import Mail, Email, Content, Attachment, Personalization
 from BeautifulSoup import BeautifulSoup
 
 file_destination = "./inmates.csv"
@@ -13,9 +10,9 @@ url = 'http://www.showmeboone.com/sheriff/JailResidents/JailResidents.asp'
 def removeFile():
     try:
         os.remove(file_destination)
-        logging.info("Past file {} removed".format(file_destination))
+        print "Past file {} removed\n".format(file_destination)
     except:
-        logging.info("No past file {} to remove".format(file_destination))
+        print "No past file {} to remove\n".format(file_destination)
 
 
 def webCrawler():
@@ -23,7 +20,7 @@ def webCrawler():
         response = requests.get(url)
         html = response.content
     except:
-        logging.critical("HTTP error. crawler is not able to connect to {}".format(url))
+        print "HTTP error. crawler is not able to connect to {}".format(url)
         return False
     try:
         # Core web parsing logic lives here.
@@ -38,9 +35,9 @@ def webCrawler():
                 list_of_cells.append(text)
             list_of_rows.append(list_of_cells)
     except:
-        logging.critical("Parsing error. The format of the url must have changed: {}".format(url))
+        print "Parsing error. The format of the url must have changed: {}".format(url)
         return False
-    logging.info("Web crawler complete")
+    print "Web crawler complete\n"
     return list_of_rows
 
 
@@ -49,39 +46,57 @@ def saveFile(list_of_rows):
         outfile = open(file_destination, "wb")
         writer = csv.writer(outfile)
         writer.writerows(list_of_rows)
-        logging.info("File {} created".format(file_destination))
+        print "File {} created\n".format(file_destination)
         return True
     except:
-        logging.critical("Unable to write content to file {}".format(file_destination))
+        print "Unable to write content to file {}".format(file_destination)
         return False
 
 
 def sendEmail():
-    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get("SENDGRID_API_KEY"))
-    mail = Mail()
-    mail.set_from(Email(os.environ.get("EMAIL")))
+    sendgrid_mail_url = "https://api.sendgrid.com/v3/mail/send"
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer {}'.format(os.environ.get("SENDGRID_API_KEY"))}
 
-    personalization = Personalization()
-    personalization.add_to(Email(os.environ.get("EMAIL")))
-    mail.add_personalization(personalization)
-
-    mail.set_subject("Hello World from the SendGrid Python Library")
-    mail.add_content(Content("text/plain", "Sample email text"))
+    email_subject = "Hello from SendGrid"
+    email_message = "Hello.  This is your scheduled task.  Enjoy the content!"
+    file_type = "text/csv"
 
     with open(file_destination, 'rb') as fd:
-        b64data = base64.b64encode(fd.read())
-    attachment = Attachment()
-    attachment.set_content(b64data)
-    attachment.set_type("text/csv") # change this if the content is xlsx or somehting else
-    attachment.set_filename(file_destination)
-    attachment.set_disposition("attachment")
-    mail.add_attachment(attachment)
+        base64data = base64.b64encode(fd.read())
 
-    # Decided not to wrap this part of the code in a try/except block, because if it fails, user should paste error stack and send it to me
-    response = sg.client.mail.send.post(request_body=mail.get())
-    logging.info(response.status_code)
-    logging.info(response.headers)
-    logging.info(response.body)
+    payload = {
+      "content": [
+        {
+          "type": "text/plain",
+          "value": email_message
+        }],
+      "personalizations": [
+        {
+          "to": [
+            {
+              "email": os.environ.get("EMAIL")
+            }
+          ],
+          "subject": email_subject
+        }
+      ],
+      "from": {
+        "email": os.environ.get("EMAIL")
+      },
+      "attachments": [
+        {
+    	  "content": base64data,
+          "type": file_type,
+          "filename": file_destination
+        }
+      ]
+    }
+
+    response = requests.post(sendgrid_mail_url, json=payload, headers=headers)
+    print "Status code: {}\n".format(response.status_code)
+    print "Header: {}\n".format(response.headers)
 
 if __name__ == "__main__":
     removeFile()
