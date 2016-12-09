@@ -1,6 +1,5 @@
 import os
 import csv
-import config
 import base64
 import logging
 import requests
