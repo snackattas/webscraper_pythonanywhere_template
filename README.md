@@ -27,15 +27,15 @@
   
   6. To schedule the script to run manually, click the Schedule tab and insert this path:
   
-  `~//<project folder/>/run.py
+  `~/<project folder>/run.py`
   
    For more information on scheduled tasks, [click here](https://help.pythonanywhere.com/pages/ScheduledTasks/)
   
 ## Troubleshooting
-  * You must be in the folder /<project folder/> to run the script.  If you run the script and you get this error:
+  * You must be in the folder PROJ FOLDER to run the script.  If you run the script and you get this error:
   
   `python: can't open file 'run.py': [Errno 2] No such file or directory`
   
-  It's because you're in the wrong directory.  Enter this command:
+   It's because you're in the wrong directory.  Enter this command:
   
   `cd ~/<project folder>/ && python run.py`
