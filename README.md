@@ -17,16 +17,13 @@
   `cd ~ && echo "export SENDGRID_API_KEY='<SENDGRID API KEY HERE>'" >>.bashrc && . ~/.bashrc`
   
   `cd ~ && echo "export EMAIL='<EMAIL HERE>'" >>.bashrc && . ~/.bashrc`
-  
-  `cd ~ && echo "export SENDGRID_USERNAME='<SENDGRID ACCOUNT USERNAME HERE>'" >>.bashrc && . ~/.bashrc`
-  
-  `cd ~ && echo "export SENDGRID_PASSWORD='<SENDGRID ACCOUNT PASSWORD HERE>'" >>.bashrc && . ~/.bashrc`
+
   4. In the bash session run this command: 
   
-  `cd ~ && git clone https://github.com/snackattas/Flights140.git && cd ~/Flights140`
+  `cd ~ && git clone <git clone link> && cd ~/<project folder>`
   5. Navigate to the newly created directory: 
   
-  `cd ~/Flights140`
+  `cd ~/<project folder>`
   
 ## Troubleshooting
   * You must be in the folder Flights140 to run the script.  If you run the script and you get this error:
@@ -35,4 +32,4 @@
   
   It's because you're in the wrong directory.  Enter this command:
   
-  `cd ~/Flights140/ && python run.py`
+  `cd ~/<project folder>/ && python run.py`
