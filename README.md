@@ -12,21 +12,27 @@
 ## Get started with pythonanywhere
   1. Create an account on [pythonanywhere](https://www.pythonanywhere.com)
   2. Enter your new account. Navigate to the Consoles tab, and start a bash session
-  3. Run this command to load your information into the environment inside the single quotes (excluding the <>):
+  3. Run these commands to load your information into the environment:
   
   `cd ~ && echo "export SENDGRID_API_KEY='<SENDGRID API KEY HERE>'" >>.bashrc && . ~/.bashrc`
   
   `cd ~ && echo "export EMAIL='<EMAIL HERE>'" >>.bashrc && . ~/.bashrc`
 
-  4. In the bash session run this command: 
+  4. In the bash session run this command to download the repo from github: 
   
   `cd ~ && git clone <git clone link> && cd ~/<project folder>`
-  5. Navigate to the newly created directory: 
   
-  `cd ~/<project folder>`
+  5. To run the script manually, type this into the bash terminal:
+  `cd ~/<project folder> && python run.py`
+  
+  6. To schedule the script to run manually, click the Schedule tab and insert this path:
+  
+  `~//<project folder/>/run.py
+  
+   For more information on scheduled tasks, [click here](https://help.pythonanywhere.com/pages/ScheduledTasks/)
   
 ## Troubleshooting
-  * You must be in the folder Flights140 to run the script.  If you run the script and you get this error:
+  * You must be in the folder /<project folder/> to run the script.  If you run the script and you get this error:
   
   `python: can't open file 'run.py': [Errno 2] No such file or directory`
   
