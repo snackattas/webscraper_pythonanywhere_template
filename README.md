@@ -9,7 +9,7 @@
   6. Give your new API Key a name and full access to Mail Send, then save
   7. Copy your newly created API Key ID
   
-## Get started with pythonanywhere
+## Setting up pythonanywhere
   1. Create an account on [pythonanywhere](https://www.pythonanywhere.com)
   2. Enter your new account. Navigate to the Consoles tab, and start a bash session
   3. Run these commands to load your information into the environment:
@@ -26,10 +26,13 @@
   
   `pip install -r requirements.txt`
   
-  6. To run the script manually, type this into the bash terminal:
+## Running the script
+  
+  * To run the script manually, type this into the bash terminal:
+  
   `cd ~/<project folder> && python run.py`
   
-  7. To schedule the script to run manually, click the Schedule tab and insert this path:
+  * To schedule the script to run automatically, click the Schedule tab and insert this path:
   
   `~/<project folder>/run.py`
   
