@@ -22,10 +22,14 @@
   
   `cd ~ && git clone <git clone link> && cd ~/<project folder>`
   
-  5. To run the script manually, type this into the bash terminal:
+  5. Download the python package requirements with this command:
+  
+  `pip install -r requirements.txt`
+  
+  6. To run the script manually, type this into the bash terminal:
   `cd ~/<project folder> && python run.py`
   
-  6. To schedule the script to run manually, click the Schedule tab and insert this path:
+  7. To schedule the script to run manually, click the Schedule tab and insert this path:
   
   `~/<project folder>/run.py`
   
